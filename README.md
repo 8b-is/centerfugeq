@@ -14,6 +14,10 @@ centerfugeq/
 │   └── package.json
 ├── game/                   SUPER PADME BROS. — the buddhist platformer
 │   └── super-padme-bros.html (the engine inline, 4 gates × 27 malas = 108)
+├── retro/                  the old-school lane: bitTricks, doombible, demoscene
+│   ├── bitTricks.ts         branchless abs/sign, popcount, gray, ternary seam
+│   ├── doombible.ts         BSP/sightline/LUT tricks + the game's design bible
+│   └── demoscene/           the inspiration index (fantasy consoles, GPL sources)
 ├── fanout/                 entheai fan-out scaffold (agy executor)
 └── docs/                   the wire, documented
 ```
