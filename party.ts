@@ -16,10 +16,10 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { resolve } from 'node:path'
 import { createHash } from 'node:crypto'
-import { seedFromText } from '../quantTernEngine/tern.ts'
-import { spriteSheet } from '../pixel/sprites.ts'
-import { chipWav } from '../pixel/chip.ts'
-import { mapOf, pico8Export } from '../pixel/tilemap.ts'
+import { seedFromText } from './quantTernEngine/tern.ts'
+import { spriteSheet } from './pixel/sprites.ts'
+import { chipWav } from './pixel/chip.ts'
+import { mapOf, pico8Export } from './pixel/tilemap.ts'
 
 function main(): void {
   const [brief, , stepsArg] = process.argv.slice(2)

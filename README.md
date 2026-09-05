@@ -12,6 +12,8 @@ centerfugeq/
 │   ├── gen.ts              CLI: game | video | image | tensor from one brief
 │   ├── spark.ts            the first spark core: the same inputs, the same map
 │   └── package.json
+├── demos/                  NEON CITY 42 — the flying android, the first demo
+│   └── neon-city-42.html   pink-neon midtown: walkers, galaxies, 21 aligned NPCs
 ├── game/                   SUPER PADME BROS. — the buddhist platformer
 │   └── super-padme-bros.html (the engine inline, 4 gates × 27 malas = 108)
 ├── quantGame/              galaxy formation as a game engine
@@ -76,6 +78,17 @@ Each run writes a manifest into `out/` carrying the seed line `⟦…⟧` and
 the ternary wire — the ledger entry of the creation. The fan-out scaffold
 (`fanout/centerfugeq-scaffold.toml`) turns the same seed line into
 entheai/agy coders that expand the wire into full render fragments.
+
+## the first demo
+
+[NEON CITY 42](demos/neon-city-42.html) — the engine's first show: fly a
+pink-neon midtown as the android POV, 21 confederate NPCs (42D hypermesh
+llms, mem8-synced) with walking routes and memory bubbles, a sky full of
+galaxies and a universe-event ticker. One seed, one city, deterministic.
+
+```bash
+open demos/neon-city-42.html   # w/s forward-back · a/d yaw · arrows altitude
+```
 
 ## the galaxy
 
