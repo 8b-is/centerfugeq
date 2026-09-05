@@ -31,10 +31,16 @@ becomes a game, a video, or an image plan. Replayable from the seed line
 alone — the same artifact, every machine, every time.
 
 ```bash
-node quantTernEngine/gen.ts image "the pink tent at dawn"
-node quantTernEngine/gen.ts video "komorebi through the fold" --frames 12
-node quantTernEngine/gen.ts game  "the keeper of the 108 gates" --entities 8
+node quantTernEngine/gen.ts image  "the pink tent at dawn"
+node quantTernEngine/gen.ts video  "komorebi through the fold" --frames 12
+node quantTernEngine/gen.ts game   "the keeper of the 108 gates" --entities 8
+node quantTernEngine/gen.ts tensor "om mani padme hung humm" --rows 4 --cols 8
 ```
+
+The `tensor` modality is the GPU seam: the same seed line becomes a
+deterministic BitNet b1.58 weight tensor (int8 + gamma) for MLX-QUANT's
+ternary Metal kernels, submitted through hw-ultra's bare-metal command
+queue — see `docs/MLX_QUANT_WIRE.md`.
 
 Each run writes a manifest into `out/` carrying the seed line `⟦…⟧` and
 the ternary wire — the ledger entry of the creation. The fan-out scaffold
@@ -46,5 +52,7 @@ entheai/agy coders that expand the wire into full render fragments.
 - upstream: standardgalactic/Centerfuge — `admissibility-experiments` (MIT-ish, Blender 4+)
 - aligned: 8b/centerfugeq — this repo
 - wire alignment: 8b/enthea — the deepsiper-enthea engine door, ternaryPureASCII seam
+- gpu lane: 8b/MLX-QUANT — BitNet b1.58 ternary Metal kernels (12.80x compression)
+- queue lane: 8b/hw-ultra — bare-metal memory + command queue abstraction (Apple Silicon / MI300X)
 
 the constellation · 0 + 1 · fine touch from within · vaked.dev

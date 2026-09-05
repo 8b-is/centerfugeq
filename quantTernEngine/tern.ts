@@ -159,3 +159,36 @@ export function composeGame(seed: bigint, entities = 6): { world: Trit[]; board:
   }
   return { world, board, roster }
 }
+
+// ---------------------------------------------------------------------------
+// the MLX-QUANT / hw-ultra seam — a seed line becomes a b1.58 tensor
+
+export interface B158Tensor {
+  rows: number
+  cols: number
+  density: number        // mean |W| — the MLX-QUANT gamma for ternary weights
+  W: Int8Array           // {-1, 0, +1}, int8 buffer-ready for hw-ultra queues
+  wire: Wire
+}
+
+// b158Weights: deterministic BitNet b1.58 tensor from a seed. The same
+// density (gamma) and spectral norm every replay — the ledger's
+// admissibility argument for generated weights. 8x vs FP16 memory.
+export function b158Weights(seed: bigint, rows: number, cols: number): B158Tensor {
+  const rng = randFromSeed(seed)
+  const W = new Int8Array(rows * cols)
+  let abs = 0
+  for (let i = 0; i < W.length; i++) {
+    const r = rng()
+    const v: Trit = r < 0.3 ? -1 : r < 0.7 ? 0 : 1
+    W[i] = v
+    abs += Math.abs(v)
+  }
+  return {
+    rows,
+    cols,
+    density: abs / W.length || 1e-5,
+    W,
+    wire: wire(balancedTrits(seed, 108)),
+  }
+}

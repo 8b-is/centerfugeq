@@ -15,6 +15,7 @@ import { mkdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import {
+  b158Weights,
   balancedTrits,
   composeGame,
   composeImage,
@@ -27,11 +28,11 @@ import {
 const __dir = dirname(fileURLToPath(import.meta.url))
 const OUT = join(__dir, '..', 'out')
 
-const MODALITIES = ['game', 'video', 'image'] as const
+const MODALITIES = ['game', 'video', 'image', 'tensor'] as const
 type Modality = (typeof MODALITIES)[number]
 
 function usage(): never {
-  console.error('usage: node gen.ts <game|video|image> "<brief>" [--frames N] [--entities N]')
+  console.error('usage: node gen.ts <game|video|image|tensor> "<brief>" [--frames N] [--entities N] [--rows R --cols C]')
   process.exit(1)
 }
 
@@ -39,9 +40,13 @@ function main(): void {
   const [modArg, brief, ...rest] = process.argv.slice(2)
   let frames = 12
   let entities = 6
+  let rows = 4
+  let cols = 8
   for (let i = 0; i < rest.length; i++) {
     if (rest[i] === '--frames') frames = Number(rest[++i])
     if (rest[i] === '--entities') entities = Number(rest[++i])
+    if (rest[i] === '--rows') rows = Number(rest[++i])
+    if (rest[i] === '--cols') cols = Number(rest[++i])
   }
   if (!modArg || !brief || !(MODALITIES as readonly string[]).includes(modArg)) usage()
 
@@ -54,8 +59,18 @@ function main(): void {
     payload = { palette: composeImage(seed) }
   } else if (modality === 'video') {
     payload = { frames: composeVideo(seed, frames) }
-  } else {
+  } else if (modality === 'game') {
     payload = composeGame(seed, entities)
+  } else {
+    const t = b158Weights(seed, rows, cols)
+    payload = {
+      rows: t.rows,
+      cols: t.cols,
+      density: t.density,
+      gamma: t.density,
+      int8_hex: Buffer.from(t.W).toString('hex'),
+      pipeline: 'hw-ultra command queue · MLX-QUANT ternary matmul kernel',
+    }
   }
 
   const manifest = {
