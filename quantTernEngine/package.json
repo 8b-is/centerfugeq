@@ -1,0 +1,10 @@
+{
+  "name": "quantternengine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "quantTernEngine — the ternary {-1, 0, +1} generation engine for game, video and image creation. Part of 8b/centerfugeq.",
+  "scripts": {
+    "gen": "node gen.ts"
+  }
+}

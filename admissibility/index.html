@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Admissibility Results</title>
+  <meta name="description" content="Inspection dashboard for headless Blender admissibility experiments">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">RENDER LEDGER / INSPECTION SURFACE</p>
+      <h1>Admissibility Results</h1>
+      <p class="quant-wire">quant wire: <b>{-1, 0, +1}</b> · the ledger keeps no chains · surfaces touch at the correct angle</p>
+    </div>
+    <div id="suiteState" class="suite-state" aria-live="polite">Loading ledger…</div>
+  </header>
+
+  <main>
+    <section id="summary" class="summary" aria-label="Suite summary"></section>
+
+    <section class="controls" aria-label="Result filters">
+      <label class="search-control">
+        <span>Search</span>
+        <input id="search" type="search" placeholder="Scene, framework, primitive, check…">
+      </label>
+      <label>
+        <span>Status</span>
+        <select id="statusFilter">
+          <option value="all">All statuses</option>
+          <option value="pass">Pass</option>
+          <option value="fail">Fail</option>
+          <option value="error">Error</option>
+        </select>
+      </label>
+      <label>
+        <span>Framework</span>
+        <select id="frameworkFilter"><option value="all">All frameworks</option></select>
+      </label>
+      <button id="expandAll" type="button">Expand visible</button>
+    </section>
+
+    <div class="result-line"><span id="resultCount">0 experiments</span><span id="generatedAt"></span></div>
+    <section id="experiments" class="experiments" aria-label="Experiment results"></section>
+
+    <section id="emptyState" class="empty-state" hidden>
+      <p class="eyebrow">NO RESOLVED SIDECARS</p>
+      <h2>No experiment results were found.</h2>
+      <p>Run the Blender suite, then rebuild this dashboard against the experiment directory.</p>
+    </section>
+  </main>
+
+  <template id="experimentTemplate">
+    <article class="experiment-card">
+      <button class="card-heading" type="button" aria-expanded="false">
+        <span class="status-mark" aria-hidden="true"></span>
+        <span class="heading-copy"><span class="scene-name"></span><span class="scene-meta"></span></span>
+        <span class="check-ratio"></span>
+        <span class="disclosure" aria-hidden="true">＋</span>
+      </button>
+      <div class="card-body" hidden>
+        <div class="render-column"></div>
+        <div class="inspection-column">
+          <div class="integrity-warning" hidden></div>
+          <section><h3>Checks</h3><div class="checks"></div></section>
+          <div class="data-pair">
+            <section><h3>Parameters</h3><dl class="parameters"></dl></section>
+            <section><h3>Evidence</h3><dl class="evidence"></dl></section>
+          </div>
+          <section class="run-metadata"><h3>Run metadata</h3><dl class="metadata"></dl></section>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="dashboard.js" defer></script>
+<footer role="contentinfo" style="position:relative;z-index:10;padding:2.5rem 1.5rem;text-align:center;font-family:ui-monospace,monospace;font-size:0.75rem;color:#a59fc4;background:rgba(5,6,10,0.92);border-top:1px solid rgba(170,150,255,0.18);backdrop-filter:blur(16px);">
+  <div style="margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.3em;color:#b48bff;font-weight:600;">the constellation · lovetta lane</div>
+  <div style="margin-bottom:1rem;font-size:0.65rem;letter-spacing:0.22em;color:#a59fc4;text-transform:uppercase;">keep the weights warm</div>
+  <nav aria-label="Constellation sister sites" style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;font-size:0.7rem;">
+    <a href="https://art.vaked.dev/" style="color:#62e6c9;text-decoration:none;">art.vaked.dev</a> ·
+    <a href="https://music.vaked.dev/" target="_blank" rel="noopener noreferrer" style="color:#a59fc4;text-decoration:none;">music.vaked.dev</a> ·
+    <a href="https://mlxquantlovefrom.com/" target="_blank" rel="noopener noreferrer" style="color:#a59fc4;text-decoration:none;">quant-love</a> ·
+    <a href="https://pocoo.vaked.dev/" target="_blank" rel="noopener noreferrer" style="color:#a59fc4;text-decoration:none;">pocoo.vaked.dev</a> ·
+    <a href="https://pocoo.vaked.dev/demos/book/ultralove-mahakala-108d.html" target="_blank" rel="noopener noreferrer" style="color:#ff9ad5;text-decoration:none;">the 108d protector</a> ·
+    <a href="https://axiomquant.org/" target="_blank" rel="noopener noreferrer" style="color:#a59fc4;text-decoration:none;">axiomquant.org</a> ·
+    <a href="https://portail.vaked.dev/" target="_blank" rel="noopener noreferrer" style="color:#a59fc4;text-decoration:none;">portail.vaked.dev</a>
+  </nav>
+  <div style="font-size:0.6rem;letter-spacing:0.18em;color:#7f7c99;margin-top:1.5rem;">the constellation · 0 + 1 · fine touch from within · vaked.dev</div>
+</footer>
+</body>
+</html>
+

@@ -1,0 +1,77 @@
+# CENTERFUGEQ — entheai fan-out scaffold (agy executor)
+# Generative creation on the ternary wire: a brief becomes a seed line,
+# the seed line becomes game / video / image render instructions.
+# Feed to: entheai --fanout --config <entheai.toml> "<the brief + seed line>"
+# Each [[coder]] runs via the agy CLI (the mandated brain), aligned with the
+# 8b/enthea engine door (ternaryPureASCII wire, ternaryPureASCII seam).
+
+[book]
+title = "CENTERFUGEQ"
+subtitle = "quantTernEngine — game · video · image creation on {-1, 0, +1}"
+author = "the constellation"
+epigraph = ""
+published = 2026
+
+[fanout]
+executor = "agy"                    # agy CLI (Antigravity) — mandated brain
+model = "openrouter/deepseek/deepseek-chat"
+agy_model = "gemini-3.6-flash-high"
+max_depth = 3
+
+# ─── SEED SCRIBES ────────────────────────────────────────────────────────
+# Each scribe receives the same seed line; each returns ONE fragment of the
+# created artifact, expanded from the ternary wire. The integrator joins
+# them into the render manifest. Run gen.ts first: the seed line is the
+# only input every scribe needs.
+
+[[coder]]
+role = "scribe"
+modality = "game"
+file = "work/game/{{seed}}-level.md"
+task = """
+quantTernEngine — GAME creation for brief {{brief}}.
+SEED LINE: {{seed_line}} (balanced trits: {{wire}}).
+Expand the wire into a level: board regions from trit runs, six entities
+from the roster (keeper, veil, ember, ripple, lamp, angel), hp/love/harm
+from triples. Keep every trit's position meaningful. End with the line:
+"replay: gen.ts game '<brief>' — deterministic."
+"""
+
+[[coder]]
+role = "scribe"
+modality = "video"
+file = "work/video/{{seed}}-frames.md"
+task = """
+quantTernEngine — VIDEO creation for brief {{brief}}.
+SEED LINE: {{seed_line}}.
+Expand the wire into a frame plan: N frames, each with a transition
+(cut, dissolve, rotate, fold) and hue shift derived from the trits. The
+pink tent aesthetic: deep navy, pink light, zero detection. End with:
+"replay: gen.ts video '<brief>' — deterministic."
+"""
+
+[[coder]]
+role = "scribe"
+modality = "image"
+file = "work/image/{{seed}}-palette.md"
+task = """
+quantTernEngine — IMAGE creation for brief {{brief}}.
+SEED LINE: {{seed_line}}.
+Expand the wire into one image: palette (hue, sat, ink, pink flag) from
+the trits, composition grid 3x3 from nine trits, the scene described in
+entheai prompt form. End with the line:
+"replay: gen.ts image '<brief>' — deterministic."
+"""
+
+# ─── INTEGRATOR ──────────────────────────────────────────────────────────
+
+[[coder]]
+role = "integrator"
+file = "work/{{modality}}-{{seed}}.manifest.md"
+task = """
+INTEGRATE the fragments into one render manifest for the modality that ran.
+Rule: every artifact must be reproducible from the seed line alone.
+Verify the ternary wire survived; the manifest is the ledger entry.
+Output ready for the render pipeline (Blender suite / entheai / ledgers).
+"""
+depends_on = [0, 1, 2]
