@@ -23,6 +23,8 @@ node retro/doombible.ts "the pink tent at dawn"
   as a tree), `lutBoard` (LUT-era logarithms), `paletteCycle` (the flame
   trick), and the `doombible` generator — the design bible of SUPER
   PADME BROS from any seed: episodes, bestiary, engine notes.
+- `demoscene/padme-8k.html` — **the pink tent**, our 8K party intro:
+  6,138 bytes, deterministic render, procedural audio at 108 BPM.
 - `demoscene/INSPIRATION.md` — the mapped index: fantasy consoles,
   code-golf lanes, the GPL retro sources (Wolf3D, DOOM, olc), and the
   demos that set the bar.

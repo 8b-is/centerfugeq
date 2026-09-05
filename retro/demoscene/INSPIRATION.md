@@ -37,4 +37,6 @@ centerfugeq. The rule of the lane: **take the trick, not the engine.**
 | [The Journey](https://www.pouet.net/prod.php?which=91103) (210) | 2022 · 4K | what four kilobytes of _intent_ can carry |
 | [Sundancer](https://www.pouet.net/prod.php?which=2288) (TBC) | 1995 · 64K | the old-school masterclass in tables and sine |
 
+| [padme-8k.html](padme-8k.html) | 2026 · 6,138 bytes · ours | the pink tent: starfield → 108-bead mandala → the gate, 108 bpm procedural audio |
+
 the constellation · 0 + 1 · fine touch from within · vaked.dev
