@@ -1,0 +1,73 @@
+# QUANTGAME — entheai fan-out scaffold (agy executor, latest gemini flash)
+# Galaxy formation as a game engine: vector DM halo × 2D Ising.
+# Feed to: entheai --fanout --config <entheai.toml> "<the galaxy brief + seed line>"
+# Each [[coder]] runs via the agy CLI on the latest gemini flash (the
+# mandated brain), expanding the seed line into sim code, story, art.
+
+[book]
+title = "QUANTGAME"
+subtitle = "galaxy formation — vector dark matter halo × 2d ising, as a game engine"
+author = "the constellation"
+epigraph = ""
+published = 2026
+
+[fanout]
+executor = "agy"                    # agy CLI (Antigravity) — mandated brain
+model = "openrouter/deepseek/deepseek-chat"
+agy_model = "gemini-3.6-flash-high" # the latest gemini flash — the brain's hands
+max_depth = 3
+
+# ─── SEED SCRIBES ────────────────────────────────────────────────────────
+# Each scribe receives the same seed line; each returns ONE fragment of
+# the galaxy: the sim code line, the lore line, the render line.
+
+[[coder]]
+role = "scribe"
+modality = "sim"
+file = "work/sim/{{seed}}-galaxy.md"
+task = """
+QUANTGAME — SIM fragment for brief {{brief}}.
+SEED LINE: {{seed_line}}.
+Expand the seed into the determinism contract of the galaxy: initial
+condition vectors, noise stream ownership, star-freeze thresholds. Keep
+the two papers honest: polarization dynamics for the halo, image
+statistics for the Ising lattice. End with:
+"replay: node quantGame/sim.ts '<brief>' — deterministic."
+"""
+
+[[coder]]
+role = "scribe"
+modality = "lore"
+file = "work/lore/{{seed}}-story.md"
+task = """
+QUANTGAME — LORE fragment for brief {{brief}}.
+SEED LINE: {{seed_line}}.
+Write the galaxy's story as the demoscene would tell it: the halo as a
+vector dream, the lattice as weather, stars as frozen laughter. The little
+monk watches. End with: "peace y'all."
+"""
+
+[[coder]]
+role = "scribe"
+modality = "render"
+file = "work/render/{{seed}}-frame.md"
+task = """
+QUANTGAME — RENDER fragment for brief {{brief}}.
+SEED LINE: {{seed_line}}.
+Describe the frames: halo particles as polarized light, the lattice as an
+image-statistic field, the wells as ink. A deterministic camera — the
+same frames every replay. End with:
+"replay: open quantGame/galaxy.html '<brief>' — deterministic."
+"""
+
+# ─── INTEGRATOR ──────────────────────────────────────────────────────────
+
+[[coder]]
+role = "integrator"
+file = "work/{{modality}}-{{seed}}.manifest.md"
+task = """
+INTEGRATE the fragments into one quantgame manifest for the modality that
+ran. Rule: every artifact must be reproducible from the seed line alone.
+Verify the two papers' mapping survived; the manifest is the ledger entry.
+"""
+depends_on = [0, 1, 2]

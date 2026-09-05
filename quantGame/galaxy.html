@@ -1,0 +1,103 @@
+<!doctype html><html lang="en" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>quantGame — the galaxy simulator · halo + ising</title><style>
+body{margin:0;background:#08060f;color:#d8d4e8;font-family:ui-monospace,monospace;display:flex;flex-direction:column;align-items:center;padding:20px 12px 40px}
+h1{background:linear-gradient(135deg,#ff6ec7,#b48bff,#ffd36e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:clamp(1.2rem,3.5vw,2rem);letter-spacing:3px;margin:0 0 4px}
+.sub{color:#b48bc0;font-size:.72rem;letter-spacing:2px;margin-bottom:14px;text-transform:uppercase;text-align:center}
+#wrap{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+canvas{background:#05040a;border:1px solid rgba(255,110,199,.3);border-radius:10px;cursor:crosshair}
+#side{width:min(300px,92vw);font-size:.72rem;line-height:1.8;color:#b48bc0;letter-spacing:1px}
+#side b{color:#ffd36e}
+#side .row{display:flex;justify-content:space-between;border-bottom:1px dashed rgba(180,139,255,.15);padding:2px 0}
+#msg{min-height:1.2em;color:#ff9ad5}
+input{width:100%;background:#0d0614;border:1px solid rgba(255,110,199,.35);border-radius:8px;color:#ffe0f0;font:.72rem ui-monospace,monospace;padding:8px 10px;outline:none;margin:6px 0}
+button{background:linear-gradient(135deg,#ff6ec7,#b48bff);border:none;border-radius:8px;color:#0d0512;font:700 .7rem ui-monospace,monospace;letter-spacing:1px;padding:8px 14px;cursor:pointer;margin-right:6px}
+.seedline{color:#ff9ad5;font-size:.66rem;word-break:break-all;margin-top:8px}
+</style></head><body>
+<h1>quantGame — galaxy formation</h1>
+<div class="sub">vector dark matter halo × 2d ising · polarization dynamics · phase-transition complexity</div>
+<div id="wrap">
+<canvas id="c" width="640" height="640"></canvas>
+<div id="side">
+<div class="row"><span>polarization P</span><b id="mP">0</b></div>
+<div class="row"><span>magnetization</span><b id="mM">0</b></div>
+<div class="row"><span>clusters</span><b id="mC">0</b></div>
+<div class="row"><span>stars</span><b id="mS">0</b></div>
+<div class="row"><span>complexity</span><b id="mX">0</b></div>
+<div class="row"><span>step</span><b id="mT">0</b></div>
+<div id="msg" style="margin-top:8px">click the field: drop mass, watch the halo answer</div>
+<input id="seed" value="the pink tent at dawn">
+<button onclick="regen()">⟳ reseed</button><button onclick="pauseB()">⏯ pause</button>
+<div class="seedline" id="sl">⟦ … ⟧</div>
+</div>
+</div>
+<script>
+// quantGame browser port — the same maths as quantGame/*.ts, inlined
+let S=7;const R=()=>{S=(S*1664525+1013904223)>>>0;return S/4294967296};
+function seedFrom(t){let h=0;for(let i=0;i<t.length;i++){h=(Math.imul(31,h)+t.charCodeAt(i))|0}return h>>>0}
+const C=document.getElementById('c'),X=C.getContext('2d'),W=C.width,H=C.height;
+const L=48;let spins=new Int8Array(L*L),bias=new Float32Array(L*L);
+let parts=[],paused=false,T=new Date().getTime()/1000;
+function init(seed){
+ S=seed>>>0;
+ spins=new Int8Array(L*L);for(let i=0;i<spins.length;i++)spins[i]=R()<.92?(R()<.5?-1:1):0;
+ parts=[];for(let i=0;i<150;i++)parts.push({x:W*(.2+.6*R()),y:H*(.2+.6*R()),vx:(R()-.5)*8,vy:(R()-.5)*8,th:R()*6.2832,m:.5+R()});
+}
+function step(){
+ let cx=0,cy=0,cm=0;for(const p of parts){cx+=p.x*p.m;cy+=p.y*p.m;cm+=p.m}cx/=cm;cy/=cm;
+ for(const p of parts){
+  let sx=0,sy=0,cnt=0;for(const q of parts){const d=Math.hypot(q.x-p.x,q.y-p.y);if(d<90&&d>.001){sx+=Math.cos(q.th);sy+=Math.sin(q.th);cnt++}}
+  const mt=cnt?Math.atan2(sy,sx):p.th;
+  const dx=cx-p.x,dy=cy-p.y,r=Math.hypot(dx,dy)+14;
+  p.vx+=dx/r*14*.004*p.m+.6*.02*Math.cos(mt)+(R()-.5)*1.2;
+  p.vy+=dy/r*14*.004*p.m+.6*.02*Math.sin(mt)+(R()-.5)*1.2;
+  p.vx*=.997;p.vy*=.997;const sp=Math.hypot(p.vx,p.vy);if(sp>6){p.vx/=sp/6;p.vy/=sp/6}
+  p.th=Math.atan2(p.vy,p.vx)*.2+p.th*.8;
+  p.x+=p.vx;p.y+=p.vy;
+  if(p.x<0){p.x=0;p.vx=Math.abs(p.vx)}if(p.x>W){p.x=W;p.vx=-Math.abs(p.vx)}
+  if(p.y<0){p.y=0;p.vy=Math.abs(p.vy)}if(p.y>H){p.y=H;p.vy=-Math.abs(p.vy)}
+ }
+ // coupling: density wells bias the lattice +1, dip the local T
+ bias.fill(0);for(const p of parts){const gx=Math.min(L-1,Math.floor(p.x/(W/L))),gy=Math.min(L-1,Math.floor(p.y/(H/L)));bias[gy*L+gx]+=p.m}
+ for(let i=0;i<bias.length;i++)bias[i]=Math.min(1.5,bias[i]*.22);
+ const Tb=2.2;
+ for(let n=0;n<L*L;n++){
+  const ii=Math.floor(R()*L),jj=Math.floor(R()*L),idx=ii*L+jj,s=spins[idx];if(s===0)continue;
+  let sum=spins[((ii+1)%L)*L+jj]+spins[((ii+L-1)%L)*L+jj]+spins[ii*L+((jj+1)%L)]+spins[ii*L+((jj+L-1)%L)];
+  const Tt=Math.max(.9,Tb-bias[idx]*1.4),hb=s===1?-bias[idx]:bias[idx],dE=2*s*sum+2*hb*s;
+  if(dE<=0||R()<Math.exp(-dE/Tt))spins[idx]=-s;
+ }
+}
+function metrics(){
+ let sum=0,nv=0;const rowsEnt=[];for(let i=0;i<L;i++){let c1=0,c2=0;for(let j=0;j<L;j++){const v=spins[i*L+j];if(v===1)c1++;else if(v===-1)c2++;if(v!==0){sum+=v;nv++}}
+  let e=0;for(const c of[c1,c2]){if(c>0){const p=c/L;e-=p*Math.log2(p)}}rowsEnt.push(e)}
+ let clusters=0;const seen=new Uint8Array(L*L);
+ for(let i=0;i<L;i++)for(let j=0;j<L;j++){const idx=i*L+j;if(spins[idx]===1&&!seen[idx]){clusters++;const q=[idx];seen[idx]=1;while(q.length){const cur=q.pop(),ci=(cur/L)|0,cj=cur%L;for(const d of[[1,0],[-1,0],[0,1],[0,-1]]){const ni=(ci+d[0]+L)%L,nj=(cj+d[1]+L)%L,nx=ni*L+nj;if(spins[nx]===1&&!seen[nx]){seen[nx]=1;q.push(nx)}}}}}
+ let psx=0,psy=0;for(const p of parts){psx+=Math.cos(p.th);psy+=Math.sin(p.th)}
+ let stars=0;for(let i=0;i<spins.length;i++)if(spins[i]===1&&bias[i]>.15)stars++;
+ const pol=Math.hypot(psx,psy)/parts.length,rowE=rowsEnt.reduce((a,b)=>a+b,0)/L,mag=nv?Math.abs(sum)/nv:0;
+ return{pol,mag,clusters,stars,rowE,comp:rowE*(1+clusters/8)*10};
+}
+function draw(){
+ X.clearRect(0,0,W,H);X.fillStyle='#05040a';X.fillRect(0,0,W,H);
+ const cs=W/L;
+ for(let i=0;i<L;i++)for(let j=0;j<L;j++){const v=spins[i*L+j];if(v===0)continue;
+  const b=bias[i*L+j];X.fillStyle=v===1?`rgba(255,214,110,${.06+b*.14})`:`rgba(91,157,255,${.05})`;
+  X.fillRect(j*cs,i*cs,cs,cs)}
+ for(const p of parts){X.fillStyle=`hsl(${Math.round(180+p.th*90)},90%,${55+20*Math.abs(Math.cos(p.th))}%)`;X.beginPath();X.arc(p.x,p.y,2.2,0,7);X.fill()}
+ const m=metrics();
+ document.getElementById('mP').textContent=m.pol.toFixed(3);
+ document.getElementById('mM').textContent=m.mag.toFixed(3);
+ document.getElementById('mC').textContent=m.clusters;
+ document.getElementById('mS').textContent=m.stars;
+ document.getElementById('mX').textContent=m.comp.toFixed(2);
+ document.getElementById('mT').textContent=T|0;
+}
+function loop(){const now=Date.now()/1000;if(now-T>.033){T=now;if(!paused){for(let i=0;i<3;i++)step();draw()}}requestAnimationFrame(loop)}
+C.addEventListener('click',e=>{const r=C.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+ for(let i=0;i<Math.min(6,parts.length/8);i++){const p=parts[(Math.random()*parts.length)|0];p.x=Math.min(W-1,Math.max(0,x+(Math.random()-.5)*30));p.y=Math.min(H-1,Math.max(0,y+(Math.random()-.5)*30));p.m+=1.6}
+ document.getElementById('msg').textContent='mass dropped — the halo answers';
+});
+function pauseB(){paused=!paused;document.getElementById('msg').textContent=paused?'paused — the system holds':'running — the system breathes'}
+function regen(){const t=document.getElementById('seed').value.trim()||'the pink tent at dawn';init(seedFrom(t));document.getElementById('sl').textContent='⟦ '+t+' · seed 0x'+seedFrom(t).toString(16)+' ⟧';document.getElementById('msg').textContent='new galaxy, same law'}
+init(seedFrom('the pink tent at dawn'));document.getElementById('sl').textContent='⟦ the pink tent at dawn · seed 0x'+seedFrom('the pink tent at dawn').toString(16)+' ⟧';
+requestAnimationFrame(loop);
+</script></body></html>

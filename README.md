@@ -14,6 +14,12 @@ centerfugeq/
 │   └── package.json
 ├── game/                   SUPER PADME BROS. — the buddhist platformer
 │   └── super-padme-bros.html (the engine inline, 4 gates × 27 malas = 108)
+├── quantGame/              galaxy formation as a game engine
+│   ├── halo.ts              the vector dark matter halo — polarization dynamics
+│   ├── ising.ts             2D Ising lattice, image-statistic complexity
+│   ├── galaxy.ts            the coupling: wells → bias → stars
+│   ├── sim.ts               headless run: any brief seeds a deterministic history
+│   └── galaxy.html          play it: click the field, watch the stars freeze
 ├── retro/                  the old-school lane: bitTricks, doombible, demoscene
 │   ├── bitTricks.ts         branchless abs/sign, popcount, gray, ternary seam
 │   ├── doombible.ts         BSP/sightline/LUT tricks + the game's design bible
@@ -62,6 +68,20 @@ Each run writes a manifest into `out/` carrying the seed line `⟦…⟧` and
 the ternary wire — the ledger entry of the creation. The fan-out scaffold
 (`fanout/centerfugeq-scaffold.toml`) turns the same seed line into
 entheai/agy coders that expand the wire into full render fragments.
+
+## the galaxy
+
+[quantGame](quantGame/galaxy.html) — galaxy formation as a game engine,
+standing on two arXiv results: the vector dark matter halo (polarization
+dynamics, coherence as the observable) and the 2D Ising model (phase
+transition complexity read as image statistics). One seed owns the
+galaxy; one click perturbs it — same seed, same history, byte for byte.
+See `docs/QUANTGAME.md` and `fanout/quantgame-scaffold.toml` (agy +
+gemini flash).
+
+```bash
+node quantGame/sim.ts "the pink tent at dawn" --steps 250
+```
 
 ## the game
 
