@@ -20,6 +20,14 @@ centerfugeq/
 │   ├── galaxy.ts            the coupling: wells → bias → stars
 │   ├── sim.ts               headless run: any brief seeds a deterministic history
 │   └── galaxy.html          play it: click the field, watch the stars freeze
+├── pixel/                  the indie lane: sprites, chiptune WAV, tilemaps
+│   ├── sprites.ts           procedural pixel art from the ternary wire
+│   ├── chip.ts              deterministic chiptune → PCM16 WAV
+│   └── tilemap.ts           Ising-relaxed maps, PICO-8/TIC-80 CSV export
+├── blender3d/               the 2.5D/3D lane: seed → scene.py → EEVEE render
+│   └── scene_builder.ts     headless Blender, same env contract as Centerfuge
+├── engines/                 where the artifacts land: Godot, Bevy, raylib, TIC-80…
+├── party.ts                 one brief in → a full demoscene entry out
 ├── retro/                  the old-school lane: bitTricks, doombible, demoscene
 │   ├── bitTricks.ts         branchless abs/sign, popcount, gray, ternary seam
 │   ├── doombible.ts         BSP/sightline/LUT tricks + the game's design bible
