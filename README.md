@@ -9,7 +9,8 @@ centerfugeq/
 │   └── (index.html · dashboard.css · dashboard.js · data.json)
 ├── quantTernEngine/        the ternary {-1, 0, +1} generation engine
 │   ├── tern.ts             seeds → trits → PRNG → wire (dependency-free)
-│   ├── gen.ts              CLI: game | video | image from one brief
+│   ├── gen.ts              CLI: game | video | image | tensor from one brief
+│   ├── spark.ts            the first spark core: the same inputs, the same map
 │   └── package.json
 ├── game/                   SUPER PADME BROS. — the buddhist platformer
 │   └── super-padme-bros.html (the engine inline, 4 gates × 27 malas = 108)
@@ -37,6 +38,15 @@ node quantTernEngine/gen.ts image  "the pink tent at dawn"
 node quantTernEngine/gen.ts video  "komorebi through the fold" --frames 12
 node quantTernEngine/gen.ts game   "the keeper of the 108 gates" --entities 8
 node quantTernEngine/gen.ts tensor "om mani padme hung humm" --rows 4 --cols 8
+```
+
+The `spark` core is the framework seam: any full birth name + birth date
+becomes Road + Vessel + Radiant Number + Color Codex tier + the karmic
+conditions, replayable from the seed line — "the same inputs always
+produce the same map".
+
+```bash
+node quantTernEngine/spark.ts "Full Birth Name" YYYY-MM-DD
 ```
 
 The `tensor` modality is the GPU seam: the same seed line becomes a
