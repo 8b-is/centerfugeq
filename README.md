@@ -11,6 +11,8 @@ centerfugeq/
 │   ├── tern.ts             seeds → trits → PRNG → wire (dependency-free)
 │   ├── gen.ts              CLI: game | video | image from one brief
 │   └── package.json
+├── game/                   SUPER PADME BROS. — the buddhist platformer
+│   └── super-padme-bros.html (the engine inline, 4 gates × 27 malas = 108)
 ├── fanout/                 entheai fan-out scaffold (agy executor)
 └── docs/                   the wire, documented
 ```
@@ -46,6 +48,20 @@ Each run writes a manifest into `out/` carrying the seed line `⟦…⟧` and
 the ternary wire — the ledger entry of the creation. The fan-out scaffold
 (`fanout/centerfugeq-scaffold.toml`) turns the same seed line into
 entheai/agy coders that expand the wire into full render fragments.
+
+## the game
+
+[SUPER PADME BROS.](game/super-padme-bros.html) — a Mario-like adventure
+on the ternary wire: hop the four gates (the tent, the six gates, the
+samsara field, the 108th dimension), collect 27 malas per level (108 in
+all), stomp the three poisons — desire, aversion, ignorance — to LIBERATE
+them (karma +1, nem-ártás), light the butter lamps, and reach the pink
+tent. Every level is generated from a seed line: type any brief and hit
+⟳ replay, the same level builds every time.
+
+```bash
+open game/super-padme-bros.html   # ← → / AD · ↑ / W / SPACE (lotus: double)
+```
 
 ## provenance
 
