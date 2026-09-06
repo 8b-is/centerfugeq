@@ -1,0 +1,24 @@
+# the spherepop sandbox — physics constants (read via tomllib, 3.11+)
+[physics]
+gravity = 2100.0
+max_fall = 940.0
+jump_vel = 760.0
+jump_cut = 0.45
+coyote_time = 0.1
+jump_buffer = 0.12
+run_accel = 2300.0
+run_max = 250.0
+dash_speed = 500.0
+dash_time = 0.14
+dash_cooldown = 0.28
+wall_slide_max = 70.0
+wall_jump_vel = 820.0
+wall_jump_away = 340.0
+
+[world]
+tile = 46
+height = 11
+width = 96
+lives = 3
+malas_total = 27
+lamps = [22, 44, 66]
