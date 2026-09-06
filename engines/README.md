@@ -67,3 +67,23 @@ against the seasons). Every artifact upholds it: deterministic, seeded,
 replayable — and never singular.
 
 the constellation · 0 + 1 · fine touch from within · vaked.dev
+
+## the selection principle — survivable ⇒ low load ∧ corresponds
+
+The garden's cultural twin of the admissibility contract: ancient mythologies
+might be random, but the ones that remain over time are the ones with lower
+cognitive load due to their correspondence with reality. Myths as
+low-cognitive-load survival machines — like a well-designed interface for
+the mind. Where `replayable ⇒ admissible` governs systems, `survivable ⇒
+low load ∧ corresponds` governs culture; the library is the run.
+
+## mach — the larger perspective, physics-grade
+
+The thread's "no way to tell the difference without a larger perspective"
+is Mach's principle: the existence of absolute rotation is determined by
+the large-scale distribution of matter (the fixed stars). Mach2 — an
+isolated body in empty space has no inertia — is the plenum's frame in
+`rsvp.ts`: the medium is what gives the flow its meaning. The summit
+floor's L toggle is Mach as a key press.
+
+the constellation · 0 + 1 · fine touch from within · vaked.dev
