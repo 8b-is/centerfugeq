@@ -38,6 +38,8 @@ export const OPERATORS = {
   timeCenter: '⌖', // the geometric center of the sphere — the center of T
   gate: '⧉', // the return gate — blackhole + magnetar, teleport home
   breath: '∿', // RIVA's cycle — 4 in, 4 out
+  creation: '{}', // the empty set — the Big Bang, the root of T: the
+  //          moment before the first trit; time's axis begins here
 } as const
 
 // glyphWire: the 108-trit wire, displayed in the geometric tier

@@ -119,6 +119,23 @@ seedline:
   protector: ཧཱུྃ ▽◈▽☸◈◈▽☸◈ … 🕯📿🪷
   tarpit:  ⊗ ▲◇▲✦◇◇▲✦◇ … ⊗ ✦◈⊗🜂石
 ```
+
+## the root of T — {}
+
+The origin of the axis: **the Big Bang, the creation moment** — the
+empty set out of which the first trit is drawn. There is no T before
+`{}`: the clock's axis begins at the creation moment. The Earth·Sun
+orbit is not the root of time — it is the **local anchor**: a clock we
+can feel, hanging from the root. The universe demo runs both clocks:
+
+```
+{}  — the root of T: the Big Bang · 13.8 Gyr · the axis begins here
+⌖   — the local anchor: the Earth·Sun orbit, 1 T = one revolution
+```
+
+Two bars of the double cross, two clocks of one time: the root and the
+anchor, `{}` and `⌖`.
+
 ## provenance
 
 - `8b/enthea` — the ternaryPureASCII wire the glyphs speak
