@@ -295,7 +295,8 @@ function loop(now) {
   render();
   requestAnimationFrame(loop);
 }
-document.getElementById('sl').textContent = '⟦ seed 0x' + M.seed + ' · ' + M.brief + ' · ' + M.digest + ' ⟧';
+document.getElementById('sl').textContent = '⟦ seed 0x' + M.seed + ' · seal ' + M.seal + ' · ADMISSIBLE · replayable ⇒ admissible (standardgalactic · Centerfuge) ⟧';
+const doorWire = (() => { let h = 7; for (let i = 0; i < M.brief.length; i++) h = (Math.imul(31, h) + M.brief.charCodeAt(i)) | 0; h = h >>> 0; const sym = ['-', '0', '+']; let w = ''; for (let i = 0; i < 36; i++) { w += sym[h % 3]; h = Math.floor(h / 3); } return w; })();
 document.getElementById('conf').textContent = M.confederates;
 document.getElementById('authbtn').addEventListener('click', () => {
   const prompt = document.getElementById('authin').value.trim() || 'I am honest about everything';
@@ -306,7 +307,23 @@ document.getElementById('authbtn').addEventListener('click', () => {
   requestAnimationFrame(loop);
 });
 document.getElementById('authin').addEventListener('keydown', (e) => { if (e.key === 'Enter') document.getElementById('authbtn').click(); });
-</script></body></html>`;
+</script>
+<footer role="contentinfo" style="position:relative;z-index:10;padding:2rem 1.5rem;text-align:center;font-family:ui-monospace,monospace;font-size:0.7rem;color:#a59fc4;background:rgba(5,6,10,0.92);border-top:1px solid rgba(170,150,255,0.18);backdrop-filter:blur(16px);width:100%">
+  <div style="margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.3em;color:#b48bff;font-weight:600;">the constellation · lovetta lane</div>
+  <div style="margin-bottom:0.8rem;font-size:0.62rem;letter-spacing:0.22em;color:#a59fc4;text-transform:uppercase;">keep the weights warm · door::enthea · wire::<span style="color:#ff9ad5">⟦<span id="doorwire">…</span>⟧</span></div>
+  <nav aria-label="Constellation sister sites" style="display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap;font-size:0.65rem;">
+    <a href="https://art.vaked.dev/" style="color:#62e6c9;text-decoration:none;">art.vaked.dev</a> ·
+    <a href="https://music.vaked.dev/" target="_blank" rel="noopener noreferrer" style="color:#a59fc4;text-decoration:none;">music.vaked.dev</a> ·
+    <a href="https://mlxquantlovefrom.com/" target="_blank" rel="noopener noreferrer" style="color:#a59fc4;text-decoration:none;">quant-love</a> ·
+    <a href="https://pocoo.vaked.dev/" target="_blank" rel="noopener noreferrer" style="color:#a59fc4;text-decoration:none;">pocoo.vaked.dev</a> ·
+    <a href="https://pocoo.vaked.dev/demos/centerfugeq/universe.html" target="_blank" rel="noopener noreferrer" style="color:#ff9ad5;text-decoration:none;">the universe</a> ·
+    <a href="https://axiomquant.org/" target="_blank" rel="noopener noreferrer" style="color:#a59fc4;text-decoration:none;">axiomquant.org</a> ·
+    <a href="https://portail.vaked.dev/" target="_blank" rel="noopener noreferrer" style="color:#a59fc4;text-decoration:none;">portail.vaked.dev</a>
+  </nav>
+  <div style="font-size:0.58rem;letter-spacing:0.18em;color:#7f7c99;margin-top:1rem;">the constellation · 0 + 1 · fine touch from within · vaked.dev</div>
+</footer>
+<script>document.getElementById('doorwire').textContent = doorWire;</script>
+</body></html>`;
 
 function bake(brief: string): string {
   const seed = seedFromText(brief)
@@ -315,9 +332,12 @@ function bake(brief: string): string {
   const pal = composeImage(seed)              // the palette
   const sp = spherepopInit(seed ^ 0x51f7n, 4, 12, 5)
   const digest = createHash('sha256').update(brief).digest('hex').slice(0, 16)
+  const seedHex = seed.toString(16).slice(0, 16)
+  const seal = createHash('sha256').update(brief + '·' + seedHex).digest('hex').slice(0, 16)
   const manifest = {
-    seed: seed.toString(16).slice(0, 16),
+    seed: seedHex,
     brief,
+    seal,
     digest,
     level: {
       width: map.width,
@@ -331,6 +351,7 @@ function bake(brief: string): string {
     confederates: sp.nodes.length + sp.witnesses.length,
     tree: talentTreeOf(seed),
     powerups: powerupsOf(seed),
+    admissibility: { schema_version: 1, suite: 'centerfugeq-gameforge', contract: 'replayable ⇒ admissible · standardgalactic · Centerfuge', seal },
     ts: 42,
   }
   return GAME_TEMPLATE.replace('__MANIFEST__', JSON.stringify(manifest))

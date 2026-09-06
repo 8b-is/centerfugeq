@@ -48,4 +48,16 @@ uv run --python 3.14 --script python/spherepop_sandbox/emulate.py \
 Every trace is byte-identical per brief — the sandbox's own
 determinism test passes, and the twin never drifts from the bake.
 
+## the admissibility suite (standardgalactic · Centerfuge)
+
+The baked game is a claim; `verify_gameforge.py` is its verify_suite —
+manifest present, seal recomputes, admissibility block, tree, powerups,
+determinism (fresh bake byte-identical) and the physics smoke (the twin
+plays the level headlessly). Verdict: ADMISSIBLE — replayable ⇒
+admissible, the Centerfuge contract applied to the gameforge.
+
+```bash
+uv run --python 3.14 --script python/spherepop_sandbox/verify_gameforge.py   out/games/super-padme-bros-fde993aea402.html --bake
+```
+
 the constellation · 0 + 1 · fine touch from within · vaked.dev
