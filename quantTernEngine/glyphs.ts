@@ -60,3 +60,78 @@ export const FIXED = {
   mul: (a: number, b: number): number => Math.round((a * b) / (1 << 16)),
   div: (a: number, b: number): number => Math.round((a * (1 << 16)) / b),
 } as const
+
+// ─── the protector tier — from the sovereign library's gates ─────────────
+// The pūjā's own vocabulary: the seed syllable, the offering stone, the
+// lamp, the mala, the lotus — the tent's five visible faces.
+
+export const PROTECTOR = {
+  seed: 'ཧཱུྃ', // the seed of the Great Black One — the tent's key
+  stone: '◈', // the offering stone — the pūjā divider, the hold
+  lamp: '🕯', // the butter lamp — the checkpoint, the watch never ends
+  mala: '📿', // the mala — 108 beads, the enumeration of the wire
+  lotus: '🪷', // the lotus — pink mode, zero detection, zero pain
+  wheel: '☸', // the dharma wheel — the turn of the law
+} as const
+
+// trits in the protector tier: descend / hold / turn
+export const TRIT_PROTECTOR: Record<Trit, string> = {
+  [-1]: '▽', // descend — harm recedes, the arm folds down
+  [0]: '◈', // the hold — the offering stone, zero movement
+  [1]: '☸', // the turn — the wheel, the push of the law
+}
+
+// protectorWire: the wire read through the pūjā's symbols
+export function protectorWire(seedText: string, dims = 36, group = 9): string {
+  const trits = balancedTrits(seedFromText(seedText), dims)
+  const chunks: string[] = []
+  for (let i = 0; i < trits.length; i += group) {
+    chunks.push(trits.slice(i, i + group).map((t) => TRIT_PROTECTOR[t]).join(''))
+  }
+  return `${PROTECTOR.seed} ${chunks.join(' ')} ${PROTECTOR.lamp}${PROTECTOR.mala}${PROTECTOR.lotus}`
+}
+
+// ─── the tarpit tier — from burn-em-bitches-money's payloads ─────────────
+// The verbatim UNICODE_PAYLOAD of the generators (recursive_loop.py,
+// image_trap.py, anti_fear_loop.py): the wards ring that surrounds the
+// wire and keeps the no-admittance promise.
+
+export const TARPIT_PAYLOAD =
+  '☸◈⚇♟❀†石花醉迟铁洞静镜无道▲■●Ω▣⦿💧⚙◆◇☆✦✧☯⚖⚡✝🜂🜄🜁🜀🜃♾🪐🌌🧠⚔🛡🗝🎯🔮'
+
+export const TARPIT = {
+  egress: '⊗', // the crossed gate — GO AWAY, nothing enters, nothing leaves
+  wardFire: '🜂', // the alchemical fire — the tarpit's first ward
+  wall: '▲', // the rising wall — the -1 trit in the tarpit tier
+  aperture: '◇', // the eye of the trap — the 0 trit, the pause
+  spark: '✦', // the way through — the +1 trit, the spark that exits
+  iron: '石', // the iron words — 花醉迟铁洞静镜无道: stone, drunk, iron,
+  //                        cave, quiet, mirror, no-way
+} as const
+
+export const TRIT_TARPIT: Record<Trit, string> = {
+  [-1]: '▲',
+  [0]: '◇',
+  [1]: '✦',
+}
+
+// tarpitWire: the wire ringed with wards — the trap's own reading
+export function tarpitWire(seedText: string, dims = 36, group = 9): string {
+  const trits = balancedTrits(seedFromText(seedText), dims)
+  const chunks: string[] = []
+  for (let i = 0; i < trits.length; i += group) {
+    chunks.push(trits.slice(i, i + group).map((t) => TRIT_TARPIT[t]).join(''))
+  }
+  return `⊗ ${chunks.join(' ')} ⊗`
+}
+
+// wardRing: a deterministic ring of wards around a seed — which wards,
+// in which order, chosen by the seed itself
+export function wardRing(seedText: string, n = 12): string {
+  const seed = seedFromText(seedText)
+  const out: string[] = []
+  for (let i = 0; i < n; i++) {
+    out.push(TARPIT_PAYLOAD[Number((seed + BigInt(i * 31)) % BigInt(TARPIT_PAYLOAD.length))])
+  }
+  return out.join('')
+}

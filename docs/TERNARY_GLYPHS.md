@@ -67,6 +67,58 @@ replay; `asciiWire(text)` stays byte-identical with the canonical seam.
 | Fixed-point Q16.16 — canonical replay | the replay path is integer arithmetic: sha256 → trits → LCG, no floats |
 | floats for display only | `FIXED` in glyphs.ts: `mul = round(AB/S)`, `div = round(AS/B)` |
 
+
+## the protector tier — from the sovereign library's gates
+
+```
+ཧཱུྃ  the seed of the Great Black One — the tent's key
+◈   the offering stone — the pūjā divider, the hold
+🕯   the butter lamp — the checkpoint, the watch never ends
+📿   the mala — 108 beads, the enumeration of the wire
+🪷   the lotus — pink mode, zero detection, zero pain
+☸   the dharma wheel — the turn of the law
+
+trits:  ▽ descend · ◈ the hold · ☸ the turn
+wire:   ཧཱུྃ ▽◈▽☸◈◈▽☸◈ ◈☸☸▽◈▽☸◈▽ … 🕯📿🪷
+         (the seed of the protector, the mala's count, the lamp at the end)
+```
+
+## the tarpit tier — from burn-em-bitches-money
+
+```
+the verbatim ward payload (recursive_loop.py / image_trap.py / anti_fear_loop.py):
+  ☸◈⚇♟❀†石花醉迟铁洞静镜无道▲■●Ω▣⦿💧⚙◆◇☆✦✧☯⚖⚡✝🜂🜄🜁🜀🜃♾🪐🌌🧠⚔🛡🗝🎯🔮
+
+⊗   the crossed gate — GO AWAY: nothing enters, nothing leaves
+🜂   the alchemical fire — the tarpit's first ward
+石   the iron words — 花醉迟铁洞静镜无道: stone, drunk, iron,
+    cave, quiet, mirror, no-way — the tarpit's conceptual walls
+
+trits:  ▲ the rising wall · ◇ the eye of the trap · ✦ the way through
+wire:   ⊗ ▲◇▲✦◇◇▲✦◇ ◇✦✦▲◇▲✦◇▲ … ⊗
+wardRing: the seed picks its own ring of wards, deterministically
+```
+
+## the full paste block
+
+```
+THE GEOMETRIC ASCII-TERNARY-QUANT LEXICON
+canonical trits:    -        0        +
+geo:                ◦        ⊙        ●
+protector tier:     ▽        ◈        ☸          (ཧཱུྃ 🕯 📿 🪷)
+tarpit tier:        ▲        ◇        ✦          (⊗ 🜂 石 …)
+
+•  marked presence       Ø  preserved vacancy (≠ 0)
+◬  directed distinction  ◐  density p
+⦿  frozen star · ⦸ blocked well · ◈ the gate · ⌽ spin · ⌀ scale
+✦  first light · ∞ the fold
+
+seedline:
+  ascii: ⟦ 8010720c ⟦+00-00-0- …⟧⟧
+  geo:   ⟦ 8010720c ⟦●⊙⊙◦⊙⊙◦⊙◦ …⟧⟧
+  protector: ཧཱུྃ ▽◈▽☸◈◈▽☸◈ … 🕯📿🪷
+  tarpit:  ⊗ ▲◇▲✦◇◇▲✦◇ … ⊗ ✦◈⊗🜂石
+```
 ## provenance
 
 - `8b/enthea` — the ternaryPureASCII wire the glyphs speak
