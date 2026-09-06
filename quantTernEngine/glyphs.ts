@@ -30,6 +30,14 @@ export const OPERATORS = {
   scale: '⌀', // the exponent — 2^e, the float's moving floor
   genesis: '✦', // first light — the radiant tier
   fold: '∞', // the union — infinite+1
+  dual: '#', // the double cross (kettőskereszt) — duality: divine + human,
+  //          Byzantine via III. Béla to Hungary; the two crossbars as the
+  //          two natures — the godNodes and the individuals, kept in check
+  witness: '𓆝', // the fish — the eBPF observer living outside the sphere
+  jelly: '🪼', // the current favorite — the drifting, self-evolving pulse
+  timeCenter: '⌖', // the geometric center of the sphere — the center of T
+  gate: '⧉', // the return gate — blackhole + magnetar, teleport home
+  breath: '∿', // RIVA's cycle — 4 in, 4 out
 } as const
 
 // glyphWire: the 108-trit wire, displayed in the geometric tier
