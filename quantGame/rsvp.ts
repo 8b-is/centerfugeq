@@ -119,6 +119,9 @@ export function rsvpStep(st: RsvpState, dt = 0.15): void {
       st.perm[i] = Math.min(4, 1 + st.S[i] * 30)
     }
   }
+  // coherence without collapse — the key sentence: structure may close but
+  // never to a singularity (6-cap), voids may open but never to nothing
+  // (0.02-floor). the clamps are the constraint, not a hack.
   for (let i = 0; i < N; i++) st.rho[i] = Math.min(6, Math.max(0.02, next[i]))
 
   // 4. the exhaustion accumulator — thermodynamic, not energetic: cosmic

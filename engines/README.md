@@ -55,3 +55,15 @@ center; the profile's shape does not change (verified, not asserted).
 replayable ⇒ admissible.
 
 the constellation · 0 + 1 · fine touch from within · vaked.dev
+
+## the key sentence
+
+**coherence without collapse** — the constellation's law for every field it
+runs: structure closes, never collapses; voids open, never to nothing. In
+code it is the clamp (`rsvp.ts`: rho capped at 6, floored at 0.02 — collapse
+prevented, coherence held); in the ∞-telescope it is the zoom (10⁶× and the
+spiral is the same spiral); in the soil floor it is the char (fertility held
+against the seasons). Every artifact upholds it: deterministic, seeded,
+replayable — and never singular.
+
+the constellation · 0 + 1 · fine touch from within · vaked.dev
