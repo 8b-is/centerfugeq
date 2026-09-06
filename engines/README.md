@@ -31,3 +31,27 @@ the sprite sheet, the chip tune, the tilemap, the Blender frame, and the
 party entry knows its weight class before entering.
 
 the constellation · 0 + 1 · fine touch from within · vaked.dev
+## the plenum lane — RSVP, applied
+
+`quantGame/rsvp.ts` — the plenum relaxation: homogeneous medium → internal
+differentiation → voids opening + structures closing → loss of usable work,
+as ONE redistribution rule (`dρ/dt = -∇·(ρv)`). The learning from the RSVP
+lineage (january 2021 brick-to-sponge → july 2022 centerless premise),
+with the epistemic statuses disaggregated in the module header:
+
+- **[established]** the skeleton and the observer-relative premise — standard
+  cosmology, not a proposal
+- **[proposed]** the local fields: scalar permeability gating a vector flow,
+  entropy production as usable-work cost
+- **[checked]** `observerInvariance()` — the horizon-centered description from
+  any site; `rsvpSelftest()` — voids open, usable work exhausts monotonically
+
+Observables are centerless by construction: `observeFrom(st, ox, oy)` returns
+the apparent radial flow from ANY observer. The playable form is
+`quantGame/plenum-floor.html` — drag the crosshair: every observer is the
+center; the profile's shape does not change (verified, not asserted).
+
+`node --experimental-strip-types quantGame/rsvp.ts` runs the selftest —
+replayable ⇒ admissible.
+
+the constellation · 0 + 1 · fine touch from within · vaked.dev
