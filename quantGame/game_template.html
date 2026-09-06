@@ -13,7 +13,7 @@ canvas{width:min(960px,96vw);border:1px solid rgba(255,110,199,.35);border-radiu
 <canvas id="c" width="960" height="540"></canvas>
 <div class="hud"><span>malas <b id="m">0</b>/27 · karma <b id="k">0</b> · talent <b id="tp">0</b> · dash <b id="d">1</b> · mode <b id="mod">0/1</b></span><span>T <b id="tt">0.000</b> · confederates <b id="conf">21</b> · <span id="tip">T = talent tree</span></span></div>
 <div class="seedline" id="sl">⟦ … ⟧</div>
-<div class="keys">← → / AD run · ↑ / W / SPACE jump (hold = higher · release = cut) · X / K dash (8-dir) · T talent tree</div>
+<div class="keys">WASD / arrows move · SPACE jump (hold = higher · release = cut) · X / K dash (8-dir) · ESC / ENTER menu · T talent tree</div>
 <script>
 const M = __MANIFEST__;
 const C = document.getElementById('c'), X = C.getContext('2d');
@@ -41,12 +41,13 @@ const GX = LW - 2;
 let px = 120, py = 320, vx = 0, vy = 0, onGround = false, coyote = 0, jbuf = 0, jheld = false;
 let dashes = stats.dash, dashT = 0, dashX = 0, dashY = 0, cdash = 0, wallDir = 0;
 let dead = false, won = false, collected = 0, karma = 0, modeT = 0, treeOpen = false;
-let t = 0, last = performance.now();
+let t = 0, last = performance.now(), menuOpen = false;
 const KEYS = {};
 document.addEventListener('keydown', e => {
   KEYS[e.key] = 1;
-  if (e.key === 't' || e.key === 'T') treeOpen = !treeOpen;
-  if ((e.key === 'x' || e.key === 'k' || e.key === 'X' || e.key === 'K') && !treeOpen && cdash <= 0 && dashes > 0 && dashT <= 0) startDash();
+  if (e.key === 'Escape' || e.key === 'Enter') { if (treeOpen) treeOpen = false; else menuOpen = !menuOpen; }
+  if (e.key === 't' || e.key === 'T') { if (menuOpen) { menuOpen = false; treeOpen = true; } else treeOpen = !treeOpen; }
+  if ((e.key === 'x' || e.key === 'k' || e.key === 'X' || e.key === 'K') && !treeOpen && !menuOpen && cdash <= 0 && dashes > 0 && dashT <= 0) startDash();
   if ('wasd arrowup arrowdown arrowleft arrowright xk '.includes(e.key.toLowerCase() + ' ')) e.preventDefault();
 });
 document.addEventListener('keyup', e => {
@@ -63,7 +64,7 @@ function startDash() {
   dashX = dx / l; dashY = dy / l; dashT = 0.14; cdash = 0.28; dashes--;
 }
 function update(dt) {
-  if (dead || won || treeOpen) return;
+  if (dead || won || treeOpen || menuOpen) return;
   if (modeT > 0) modeT -= dt;
   if (dashT > 0) {
     dashT -= dt;
@@ -133,6 +134,25 @@ function render() {
   X.fillStyle = modeT > 0 ? '#ff9ad5' : '#e8d8f0'; X.beginPath(); X.arc(px + 19, py - 4, 10, 0, TAU); X.fill(); X.fillStyle = modeT > 0 ? '#ffd36e' : '#b48bff'; X.fillRect(px + 8, py + 8, 22, 26);
   for (let i = 0; i < 21; i++) { const wx = ((i * 97 + Math.floor(t * 8)) % (LW * TILE)); const wy = (LH - 2) * TILE - (i % 3) * TILE; X.fillStyle = 'rgba(98,230,201,.6)'; X.beginPath(); X.arc(wx, wy, 2.4, 0, TAU); X.fill(); if (Math.abs(wx - px) < 60) { X.fillStyle = 'rgba(5,2,8,.8)'; X.fillRect(wx - 34, wy - 30, 68, 16); X.fillStyle = '#62e6c9'; X.font = '8px ui-monospace'; X.fillText('mem8·' + i + ' ∿', wx - 30, wy - 18); } }
   X.restore();
+  // the menu overlay — ESC/ENTER
+  if (menuOpen) {
+    X.fillStyle = 'rgba(4,2,10,.94)'; X.fillRect(0, 0, W, H);
+    X.strokeStyle = 'rgba(255,211,110,.5)'; X.lineWidth = 1; X.strokeRect(W / 2 - 200, H / 2 - 120, 400, 240);
+    X.fillStyle = '#ffd36e'; X.font = '18px ui-monospace'; X.textAlign = 'center';
+    X.fillText('SUPER PADME BROS — the menu', W / 2, H / 2 - 84); X.textAlign = 'left';
+    X.fillStyle = '#e8d8f0'; X.font = '11px ui-monospace';
+    const lines = [
+      'WASD / arrows — move',
+      'SPACE / W / ↑ — jump (hold = higher, release = cut)',
+      'X / K — dash, 8 directions',
+      'T — the talent tree',
+      'ESC / ENTER — close this menu',
+      'stomp a poison to liberate it · 27 malas open the gate',
+    ];
+    lines.forEach((l, i) => X.fillText(l, W / 2 - 180, H / 2 - 60 + i * 22));
+    X.fillStyle = '#62e6c9'; X.font = '10px ui-monospace';
+    X.fillText('the stream continues — return', W / 2 - 180, H / 2 + 84);
+  }
   // the talent tree overlay
   if (treeOpen) { X.fillStyle = 'rgba(4,2,10,.92)'; X.fillRect(0, 0, W, H); X.strokeStyle = 'rgba(180,139,255,.6)'; X.lineWidth = 1; for (const e of TREE.edges) { const a = TREE.nodes[e[0]], b = TREE.nodes[e[1]]; const ax = 120 + a.gx * 104, ay = 80 + a.gy * 84, bx2 = 120 + b.gx * 104, by2 = 80 + b.gy * 84; X.strokeStyle = alloc[a.i] && alloc[b.i] ? 'rgba(255,211,110,.9)' : alloc[a.i] ? 'rgba(255,211,110,.4)' : 'rgba(90,70,120,.5)'; X.beginPath(); X.moveTo(ax, ay); X.lineTo(bx2, by2); X.stroke(); }
     for (const n of TREE.nodes) { const ax = 120 + n.gx * 104, ay = 80 + n.gy * 84; X.fillStyle = alloc[n.i] ? '#ffd36e' : tp > 0 && cannotalloc(n) ? '#5b9dff' : '#3a2150'; X.beginPath(); X.arc(ax, ay, alloc[n.i] ? 12 : 9, 0, TAU); X.fill(); X.strokeStyle = '#ff9ad5'; X.lineWidth = 1; X.stroke(); X.fillStyle = '#e8d8f0'; X.font = '8px ui-monospace'; X.fillText(n.stat[0].toUpperCase(), ax - 3, ay + 3); X.fillStyle = '#8a6aa0'; X.font = '8px ui-monospace'; X.fillText('+' + n.amt + ' ' + n.stat, ax - 16, ay + 26); }
