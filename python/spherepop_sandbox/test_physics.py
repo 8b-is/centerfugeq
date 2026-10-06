@@ -9,6 +9,7 @@ bake. Run: uv run --script test_physics.py
 from __future__ import annotations
 
 import unittest
+from dataclasses import replace
 from pathlib import Path
 
 from world import Config, Phase, World
@@ -19,6 +20,18 @@ def make_world(seed: int = 42) -> World:
 
 
 class PhysicsTests(unittest.TestCase):
+    def test_configured_lives_and_game_over(self) -> None:
+        cfg = Config.load(Path(__file__).parent / "sandbox.toml")
+        for lives in (1, 7):
+            with self.subTest(lives=lives):
+                w = World(replace(cfg, lives=lives), 42)
+                self.assertEqual(w.player.lives, lives)
+                for remaining in range(lives - 1, -1, -1):
+                    w.player.y = w.cfg.height * w.cfg.tile + 10
+                    w.step(0.016, {})
+                    self.assertEqual(w.player.lives, remaining)
+                    self.assertEqual(w.game_over, remaining == 0)
+
     def test_gravity_pulls(self) -> None:
         w = make_world()
         y0 = w.player.y

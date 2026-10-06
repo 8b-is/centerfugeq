@@ -15,8 +15,11 @@ jobs:
       - name: assemble the floors bundle
         run: |
           mkdir -p dist/centerfugeq-${GITHUB_REF_NAME}
-          cp quantGame/*.html quantTernEngine/*.js quantTernEngine/*.ts scripts/check-floors.mjs dist/centerfugeq-${GITHUB_REF_NAME}/ 2>/dev/null || true
-          cp README.md CHANGELOG.md SEMVER.md dist/centerfugeq-${GITHUB_REF_NAME}/ 2>/dev/null || true
+          # Preserve relative imports and gen.ts template paths in the extracted bundle.
+          cp -R quantGame quantTernEngine pixel retro blender3d unity3d docs dist/centerfugeq-${GITHUB_REF_NAME}/
+          mkdir -p dist/centerfugeq-${GITHUB_REF_NAME}/scripts
+          cp scripts/check-floors.mjs dist/centerfugeq-${GITHUB_REF_NAME}/scripts/
+          cp README.md CHANGELOG.md SEMVER.md dist/centerfugeq-${GITHUB_REF_NAME}/
           (cd dist && zip -r "centerfugeq-${GITHUB_REF_NAME}.zip" "centerfugeq-${GITHUB_REF_NAME}")
       - uses: actions/upload-artifact@v4
         with:
