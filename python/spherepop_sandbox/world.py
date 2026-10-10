@@ -165,7 +165,11 @@ class World:
         self.game_over = False
         self.steps = 0
         spawn = self._first_solid()
-        self.player = Player(x=spawn * cfg.tile + 40, y=(cfg.height - self.heights[spawn]) * cfg.tile - 46)
+        self.player = Player(
+            x=spawn * cfg.tile + 40,
+            y=(cfg.height - self.heights[spawn]) * cfg.tile - 46,
+            lives=cfg.lives,
+        )
 
     def _heights(self, seed: int) -> list[int]:
         rng = Random(seed)
